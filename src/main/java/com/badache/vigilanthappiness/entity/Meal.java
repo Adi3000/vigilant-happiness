@@ -1,5 +1,8 @@
 package com.badache.vigilanthappiness.entity;
 
+import antlr.StringUtils;
+import com.badache.vigilanthappiness.dto.IngredientDto;
+import com.badache.vigilanthappiness.dto.MealDto;
 import com.badache.vigilanthappiness.entity.enums.MealType;
 
 import javax.persistence.*;
@@ -19,40 +22,40 @@ public class Meal {
     Set<Ingredient> ingredients = new HashSet<>();
 
     public Meal(String name, MealType type) {
+        if (name == null || name.equals(""))    {
+            throw new IllegalArgumentException("Meal must at least be named");
+        }
+
         this.name = name;
         this.type = type;
-    }
-
-    public long getMealId() {
-        return mealId;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    public long getMealId() {
+        return mealId;
+    }
+
     public void setMealId(long mealId) {
         this.mealId = mealId;
     }
 
+    @Column(name = "NAME", nullable = false)
     public String getName() {
         return name;
     }
 
-    @Column(name = "NAME")
     public void setName(String name) {
         this.name = name;
     }
 
+    @Column(name = "TYPE")
     public MealType getType() {
         return type;
     }
 
-    @Column(name = "TYPE")
     public void setType(MealType type) {
         this.type = type;
-    }
-
-    public Set<Ingredient> getIngredients() {
-        return ingredients;
     }
 
     @ManyToMany(cascade = { CascadeType.ALL })
@@ -61,6 +64,10 @@ public class Meal {
             joinColumns = { @JoinColumn(name = "mealId") },
             inverseJoinColumns = { @JoinColumn(name = "ingredientId") }
     )
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
@@ -72,5 +79,18 @@ public class Meal {
 
         this.ingredients.add(addedIngredient);
         addedIngredient.getMeals().add(this);
+    }
+
+    public MealDto toDto()  {
+        final MealDto mealDto = new MealDto(this.name, this.type);
+
+        this.ingredients.forEach(ingredientToConvert ->
+                mealDto.addIngredient(ingredientToConvert.toDtoWithoutMeals()));
+
+        return mealDto;
+    }
+
+    public MealDto toDtoWithoutIngredients() {
+        return new MealDto(this.name, this.type);
     }
 }
