@@ -9,5 +9,4 @@ public class VigilantHappinessApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VigilantHappinessApplication.class, args);
 	}
-
 }
