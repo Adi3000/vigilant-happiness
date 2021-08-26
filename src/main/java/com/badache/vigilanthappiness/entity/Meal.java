@@ -1,7 +1,5 @@
 package com.badache.vigilanthappiness.entity;
 
-import antlr.StringUtils;
-import com.badache.vigilanthappiness.dto.IngredientDto;
 import com.badache.vigilanthappiness.dto.MealDto;
 import com.badache.vigilanthappiness.entity.enums.MealType;
 
@@ -13,13 +11,17 @@ import java.util.Set;
 @Table(name = "MEAL")
 public class Meal {
 
-    private Long mealId;
+    private Long id;
 
     private String name;
 
     private MealType type;
 
     Set<Ingredient> ingredients = new HashSet<>();
+
+    public Meal()   {
+        // Default constructor, needed for Hibernate
+    }
 
     public Meal(String name, MealType type) {
         if (name == null || name.equals(""))    {
@@ -31,13 +33,13 @@ public class Meal {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getMealId() {
-        return mealId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
     }
 
-    public void setMealId(long mealId) {
-        this.mealId = mealId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Column(name = "NAME", nullable = false)

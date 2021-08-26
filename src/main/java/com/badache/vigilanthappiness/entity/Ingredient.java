@@ -1,7 +1,6 @@
 package com.badache.vigilanthappiness.entity;
 
 import com.badache.vigilanthappiness.dto.IngredientDto;
-import com.badache.vigilanthappiness.dto.MealDto;
 import com.badache.vigilanthappiness.entity.enums.IngredientType;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.Set;
 @Table(name = "INGREDIENT")
 public class Ingredient {
 
-    private Long ingredientId;
+    private Long id;
 
     private String name;
 
@@ -26,13 +25,13 @@ public class Ingredient {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getIngredientId() {
-        return ingredientId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
     }
 
-    public void setIngredientId(Long ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Column(name = "NAME")
