@@ -39,10 +39,10 @@ public class MealTest {
         final MealDto resultDto = meal.toDto();
         
         Assertions.assertNotNull(resultDto);
-        Assertions.assertEquals(meal.getName(), resultDto.getName());
-        Assertions.assertEquals(meal.getType(), resultDto.getType());
+        Assertions.assertEquals(meal.getName(), resultDto.name());
+        Assertions.assertEquals(meal.getType(), resultDto.type());
         
-        Assertions.assertNotNull(resultDto.getIngredients());
-        Assertions.assertEquals(2, resultDto.getIngredients().size());
+        Assertions.assertNotNull(resultDto.ingredients());
+        Assertions.assertEquals(2, resultDto.ingredients().size());
     }
 }

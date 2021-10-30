@@ -5,46 +5,16 @@ import com.badache.vigilanthappiness.entity.enums.MealType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MealDto {
+public record MealDto (String name, MealType type, Set<IngredientDto> ingredients){
 
-    private String name;
 
-    private MealType type;
-
-    private Set<IngredientDto> ingredients = new HashSet<>();
-
-    public MealDto(String name, MealType type) {
-        this.name = name;
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public MealType getType() {
-        return type;
-    }
-
-    public void setType(MealType type) {
-        this.type = type;
-    }
-
-    public Set<IngredientDto> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(Set<IngredientDto> ingredients) {
-        this.ingredients = ingredients;
+    public static MealDto from(String name, MealType type) {
+        return new MealDto(name, type, new HashSet<>(0));
     }
 
     public void addIngredient(IngredientDto ingredientDto) {
         if (ingredientDto == null)  {
-            throw new IllegalArgumentException("Can't add a non-existing ingredient to mealDto " + this.getName());
+            throw new IllegalArgumentException("Can't add a non-existing ingredient to mealDto " + this.name());
         }
 
         // If not, may induce crossed calls > StackOverflowException
@@ -52,6 +22,6 @@ public class MealDto {
             this.ingredients.add(ingredientDto);
         }
 
-        ingredientDto.getMeals().add(this);
+        ingredientDto.meals().add(this);
     }
 }

@@ -84,7 +84,7 @@ public class Meal {
     }
 
     public MealDto toDto()  {
-        final MealDto mealDto = new MealDto(this.name, this.type);
+        final MealDto mealDto = MealDto.from(this.name, this.type);
 
         this.ingredients.forEach(ingredientToConvert ->
                 mealDto.addIngredient(ingredientToConvert.toDtoWithoutMeals()));
@@ -93,6 +93,6 @@ public class Meal {
     }
 
     public MealDto toDtoWithoutIngredients() {
-        return new MealDto(this.name, this.type);
+        return MealDto.from(this.name, this.type);
     }
 }

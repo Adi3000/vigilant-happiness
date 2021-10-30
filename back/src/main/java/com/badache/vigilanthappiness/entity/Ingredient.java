@@ -63,15 +63,15 @@ public class Ingredient {
 
     public IngredientDto toDto()  {
         final IngredientDto ingredientDto =
-            new IngredientDto(this.name, this.type);
+            IngredientDto.from(this.name, this.type);
 
         this.meals.forEach(mealToConvert ->
-                ingredientDto.getMeals().add(mealToConvert.toDtoWithoutIngredients()));
+                ingredientDto.meals().add(mealToConvert.toDtoWithoutIngredients()));
 
         return ingredientDto;
     }
 
     public IngredientDto toDtoWithoutMeals()    {
-        return new IngredientDto(this.name, this.type);
+        return IngredientDto.from(this.name, this.type);
     }
 }
