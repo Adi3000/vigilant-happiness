@@ -19,8 +19,8 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
      * @return The meal entity, if a name matches. Null, otherwise.
      */
     @Query(value = "SELECT * FROM MEAL m WHERE m.name = ?1", nativeQuery = true)
-    public Meal getMealByName(final String mealName);
+    Meal getMealByName(final String mealName);
 
     @Query(value = "SELECT * FROM MEAL ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
-    public Meal getRandomMeal();
+    Meal getRandomMeal();
 }
