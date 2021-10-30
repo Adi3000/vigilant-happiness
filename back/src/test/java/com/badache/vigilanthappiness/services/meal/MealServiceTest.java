@@ -48,4 +48,11 @@ public class MealServiceTest {
         final Meal unnamedMeal = this.mealService.getMealByName("Blanquette de Bouftou d'Alibert");
         Assertions.assertNull(unnamedMeal);
     }
+
+    @Test
+    public void getRandomMealTest()     {
+        final Meal randomMeal = this.mealService.getRandomMeal();
+
+        Assertions.assertNotNull(randomMeal);
+    }
 }

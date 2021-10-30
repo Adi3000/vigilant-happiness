@@ -25,4 +25,8 @@ public class MealService {
 
         return this.mealRepository.getMealByName(mealName);
     }
+
+    public Meal getRandomMeal()     {
+        return this.mealRepository.getRandomMeal();
+    }
 }
