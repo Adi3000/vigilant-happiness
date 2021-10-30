@@ -17,10 +17,35 @@ public class MealServiceTest {
 
     @Test
     public void retrieveAllMealsTest()      {
-        final List<Meal> mockedMeals = mealService.getAllMeals();
+        final List<Meal> mockedMeals = this.mealService.getAllMeals();
 
         Assertions.assertNotNull(mockedMeals);
         Assertions.assertFalse(mockedMeals.isEmpty());
         Assertions.assertEquals(4, mockedMeals.size());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenSearchingWithNullTest()     {
+        NullPointerException thrownExceptionWhenNameNull = Assertions.assertThrows(
+                NullPointerException.class, () -> this.mealService.getMealByName(null),
+                "Name is null, and as expected, we throw an exception");
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenSearchingWithEmptyTest()     {
+        NullPointerException thrownExceptionWhenNameNull = Assertions.assertThrows(
+                NullPointerException.class, () -> this.mealService.getMealByName(""),
+                "Name is empty, and as expected, we throw an exception");
+    }
+
+    @Test
+    public void getMealByNameTest()     {
+        final Meal namedMeal = this.mealService.getMealByName("Poulet braisé");
+
+        Assertions.assertNotNull(namedMeal);
+        Assertions.assertEquals(1, namedMeal.getId());
+
+        final Meal unnamedMeal = this.mealService.getMealByName("Blanquette de Bouftou d'Alibert");
+        Assertions.assertNull(unnamedMeal);
     }
 }
